@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 
 // Neon serverless PostgreSQL connection string
-const neonDbUrl = "postgresql://neondb_owner:npg_7XBzjrWGCko0@ep-green-paper-avjxfi7j-pooler.c-11.us-east-1.aws.neon.tech/neondb?sslmode=require&connect_timeout=15";
+const neonDbUrl = "postgresql://neondb_owner:npg_2JyR0ipQHrgm@ep-restless-truth-auffv8qt-pooler.c-10.us-east-1.aws.neon.tech/neondb?sslmode=require&connect_timeout=15";
 
 let dbUrl = process.env.DATABASE_URL;
 
