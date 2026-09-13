@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/export.controller');
+const { authMiddleware } = require('../middleware/auth.middleware');
+
+router.use(authMiddleware);
+
+router.get('/workorder/:id/pdf', ctrl.exportWorkOrderPdf);
+router.get('/inventory/pdf', ctrl.exportInventoryPdf);
+router.get('/csrd/pdf', ctrl.exportCSRDPdf);
+
+module.exports = router;

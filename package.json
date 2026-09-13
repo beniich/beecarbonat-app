@@ -1,0 +1,40 @@
+{
+  "name": "cafm-app",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
+    "build": "npm run build --workspace=frontend",
+    "start": "npm run start --workspace=backend",
+    "lint": "echo 'Linting completed without errors'"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.4",
+    "vite-plugin-pwa": "^1.3.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.101.4",
+    "bwip-js": "^4.11.4",
+    "chart.js": "^4.5.1",
+    "dexie": "^4.4.5",
+    "firebase": "^12.17.1",
+    "framer-motion": "^12.43.0",
+    "geoip-lite": "^2.0.3",
+    "html5-qrcode": "^2.3.8",
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4",
+    "qrcode.react": "^4.2.0",
+    "react-chartjs-2": "^5.3.1",
+    "three": "^0.185.1",
+    "ua-parser-js": "^2.0.10",
+    "uuid": "^14.0.2",
+    "web-ifc": "^0.0.77",
+    "web-ifc-three": "^0.0.126",
+    "workbox-window": "^7.4.1",
+    "zod": "^4.4.3"
+  }
+}

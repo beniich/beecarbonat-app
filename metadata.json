@@ -1,0 +1,8 @@
+{
+  "name": "BeeCarbonat",
+  "description": "BeeCarbonat — Plateforme intelligente de gestion des installations, maintenance prédictive, BIM et ERP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
