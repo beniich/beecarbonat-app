@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const rawApiUrl = import.meta.env.VITE_API_URL;
+const crmBaseURL = rawApiUrl ? (rawApiUrl.endsWith('/') ? `${rawApiUrl}crm` : `${rawApiUrl}/crm`) : '/api/crm';
+
 const crmApi = axios.create({
-  baseURL: '/api/crm',
+  baseURL: crmBaseURL,
   timeout: 10000
 });
 
