@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
-    "build": "npm run build --workspace=frontend",
+    "build": "pnpm --filter cafm-frontend build",
+    "deploy": "pnpm --filter cafm-frontend run deploy",
     "start": "npm run start --workspace=backend",
     "lint": "echo 'Linting completed without errors'"
   },
