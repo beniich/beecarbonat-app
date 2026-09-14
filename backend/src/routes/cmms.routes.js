@@ -21,9 +21,12 @@ router.get('/failures/analysis', requireRole('ADMIN', 'MANAGER', 'TECHNICIAN'), 
 
 // Work orders / Interventions (alias CMMS)
 router.get('/work-orders', requireRole('ADMIN', 'MANAGER', 'TECHNICIAN'), woCtrl.getAll);
+router.get('/work-orders/:id', requireRole('ADMIN', 'MANAGER', 'TECHNICIAN'), woCtrl.getById);
 router.post('/work-orders', requireRole('ADMIN', 'MANAGER', 'TECHNICIAN'), woCtrl.create);
 router.put('/work-orders/:id', requireRole('ADMIN', 'MANAGER', 'TECHNICIAN'), woCtrl.update);
 router.patch('/work-orders/:id', requireRole('ADMIN', 'MANAGER', 'TECHNICIAN'), woCtrl.update);
+router.patch('/work-orders/:id/status', requireRole('ADMIN', 'MANAGER', 'TECHNICIAN'), woCtrl.updateStatus);
+router.delete('/work-orders/:id', requireRole('ADMIN', 'MANAGER'), woCtrl.deleteOne);
 
 module.exports = router;
 

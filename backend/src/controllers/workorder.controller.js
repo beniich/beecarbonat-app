@@ -121,3 +121,78 @@ exports.update = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.getById = async (req, res) => {
+  try {
+    const workOrder = await prisma.workOrder.findUnique({
+      where: { id: req.params.id },
+      include: {
+        asset: { select: { name: true, category: true, location: true, tenantId: true } },
+        assignedTo: { select: { firstName: true, lastName: true, email: true } },
+        createdBy: { select: { firstName: true, lastName: true } },
+        orderParts: { include: { part: true } },
+        comments: { include: { author: { select: { firstName: true, lastName: true } } } }
+      }
+    });
+    if (!workOrder) {
+      return res.status(404).json({ error: 'Work order not found' });
+    }
+    res.json(workOrder);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.updateStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const normalizedStatus = (status || '').toUpperCase();
+    const workOrder = await prisma.workOrder.update({
+      where: { id: req.params.id },
+      data: {
+        status: normalizedStatus || status,
+        ...(normalizedStatus === 'COMPLETED' ? { completedAt: new Date() } : {})
+      }
+    });
+
+    if (normalizedStatus === 'COMPLETED' && workOrder.assetId) {
+      try {
+        await prisma.maintenanceLog.create({
+          data: {
+            description: workOrder.title,
+            cost: workOrder.actualCost || 0,
+            performedAt: new Date(),
+            performedBy: workOrder.assignedToId || 'unknown',
+            assetId: workOrder.assetId
+          }
+        });
+        await prisma.asset.update({
+          where: { id: workOrder.assetId },
+          data: {
+            status: 'OPERATIONAL',
+            lastMaintenance: new Date(),
+            healthScore: 100
+          }
+        });
+      } catch (err) {
+        console.warn('Post-completion maintenance log warning:', err.message);
+      }
+    }
+
+    res.json(workOrder);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.deleteOne = async (req, res) => {
+  try {
+    await prisma.workOrder.delete({
+      where: { id: req.params.id }
+    });
+    res.json({ success: true, message: `Work order ${req.params.id} deleted` });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
